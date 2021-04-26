@@ -1,5 +1,8 @@
 package control;
 
+import model.BinarySearchTree;
+import model.Worker;
+
 public class MainController {
 
     private WorkerHandler workerHandler;
@@ -35,6 +38,7 @@ public class MainController {
         workerHandler.addTaskAndWorker("Claus",23);
 
         //TODO 02: Stellen Sie den resultierenden binären Suchbaum angemessen dar, falls dieser die Arbeiter lexikographisch einfügt. In ihrem Baum müssen die IDs der Aufträge ebenfalls dargestellt werden. Überlegen Sie sich hierzu eine Darstellungsweise.
+        System.out.println(workerHandler.showWorkers(workerHandler.getAllWorkers()));
     }
 
     public void releaseAllTasks(){

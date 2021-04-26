@@ -19,6 +19,14 @@ public class WorkerHandler {
      */
     public void addTaskAndWorker(String name, int id){
         //TODO 03: Setzen Sie die Methode gemäß obiger Beschreibung um.
+        Worker worker = allWorker.search(new Worker(name));
+        if(worker!=null){
+            worker.addTask(id);
+        }else{
+            worker = new Worker(name);
+            worker.addTask(id);
+            allWorker.insert(worker);
+        }
     }
 
     /**
@@ -38,9 +46,52 @@ public class WorkerHandler {
      * @return String bestehend aus Arbeiternamen und deren IDs.
      */
     private String releaseAllTasksAndShowWorker(BinarySearchTree<Worker> tree){
-        String output = "";
         //TODO 04a: Stellen Sie handschriftlich die gewünschte Ausgabe gemäß des vorhanden Baums dar (siehe MainController ab Zeile 13). Hierbei genügen die ersten drei Arbeiter und ihre IDs, die von dieser Methode ausgegeben werden.
         //TODO 04b: Setzen Sie anschließend diese Methode gemäß obiger Beschreibung um.
-        return output;
+        String o = "";
+
+        if(!tree.isEmpty()) {
+            o += showWorkers(tree.getLeftTree());
+
+            o += "Worker: "+tree.getContent().getName()+", Tasks: ";
+            if(tree.getContent().getTasks() != null && tree.getContent().getTasks().length>0) {
+                o += "{";
+                for (int i = 0; i < tree.getContent().getTasks().length; i++) {
+                    o += tree.getContent().getTasks()[i].getID() + ";";
+                }
+                o += "}\n";
+            }else{
+                o += "No Tasks active.\n";
+            }
+            tree.getContent().completeAllTasks();
+
+            o += showWorkers(tree.getRightTree());
+        }
+        return o;
+    }
+
+    public String showWorkers(BinarySearchTree<Worker> allWorkers){
+        String o = "";
+        if(!allWorkers.isEmpty()) {
+            o += showWorkers(allWorkers.getLeftTree());
+
+            o += "Worker: "+allWorkers.getContent().getName()+", Tasks: ";
+            if(allWorkers.getContent().getTasks() != null && allWorkers.getContent().getTasks().length>0) {
+                o += "{";
+                for (int i = 0; i < allWorkers.getContent().getTasks().length; i++) {
+                    o += allWorkers.getContent().getTasks()[i].getID() + ";";
+                }
+                o += "}\n";
+            }else{
+                o += "No Tasks active.\n";
+            }
+
+            o += showWorkers(allWorkers.getRightTree());
+        }
+        return o;
+    }
+
+    public BinarySearchTree getAllWorkers(){
+        return allWorker;
     }
 }
