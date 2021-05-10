@@ -94,8 +94,7 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 		if(pContent != null){
 			if(isEmpty()){
 				this.node = new BSTNode<>(pContent);
-			}
-			else if (pContent.isGreater(node.content)){
+			} else if (pContent.isGreater(node.content)){
 				if(getRightTree().isEmpty()){
 					getRightTree().node = new BSTNode<>(pContent);
 				}else{
